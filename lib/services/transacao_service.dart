@@ -1,3 +1,5 @@
+import 'package:flutter_apis_rest/services/transacao_rest_service.dart';
+
 import '../models/transacao.dart';
 import '../services/conta_service.dart';
 import '../utils/db_util.dart';
@@ -7,8 +9,10 @@ import 'package:date_format/date_format.dart';
 class TransacaoService {
   List<Transacao> _transacaoList = [];
   ContaService cs = ContaService();
+  TransacaoRestService trs = TransacaoRestService();
 
   Future<List> getAllTransacoes() async {
+    trs.getTransacoes();
     final dataList = await DbUtil.getData('transacao');
     _transacaoList = dataList.map((transacoes) => Transacao(
       id: transacoes['id'],

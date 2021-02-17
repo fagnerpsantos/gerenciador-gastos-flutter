@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_apis_rest/services/conta_rest_service.dart';
 import '../../models/conta.dart';
 import '../../screens/constants/color_contant.dart';
 import '../../screens/home/home_screen.dart';
@@ -14,6 +15,7 @@ class CadastrarContaScreen extends StatefulWidget {
 
 class _CadastrarContaScreenState extends State<CadastrarContaScreen> {
   final ContaService ts = ContaService();
+  final ContaRestService crs = ContaRestService();
   Conta conta;
   final _tituloController = TextEditingController();
   final _saldoController = TextEditingController();
@@ -58,7 +60,7 @@ class _CadastrarContaScreenState extends State<CadastrarContaScreen> {
                         Conta newConta = Conta(
                             titulo: _tituloController.text,
                             saldo: double.parse(_saldoController.text));
-                        ts.addConta(newConta);
+                        crs.addConta(newConta);
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => HomeScreen(),

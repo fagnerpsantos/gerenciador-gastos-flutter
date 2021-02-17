@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_apis_rest/services/conta_rest_service.dart';
 import '../../../models/conta.dart';
 import '../../../models/transacao.dart';
 import '../../../screens/components/card_transacao.dart';
@@ -18,6 +19,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   TransacaoService ts = TransacaoService();
   ContaService cs = ContaService();
+  ContaRestService crs = ContaRestService();
   Future<List> _loadTransacoes;
   Future<List> _loadContas;
   List<Transacao> _transacoes;
@@ -131,6 +133,6 @@ class _BodyState extends State<Body> {
   }
 
   Future<List> _getContas() async {
-    return await cs.getAllContas();
+    return await crs.getContas();
   }
 }
