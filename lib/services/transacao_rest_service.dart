@@ -19,15 +19,15 @@ class TransacaoRestService {
 }
 
   Future<Transacao> addTransacao(Transacao transacao) async {
-    final novaTransacao = Transacao(
-        id: transacao.id,
-        titulo: transacao.titulo,
-        tipo: transacao.tipo,
-        descricao: transacao.descricao,
-        valor: transacao.valor,
-        data: transacao.data,
-        conta: transacao.conta
-    );
+    final novaTransacao = {
+        'id': transacao.id,
+        'titulo': transacao.titulo,
+        'tipo': transacao.tipo,
+        'descricao': transacao.descricao,
+        'valor': transacao.valor,
+        'data': transacao.data,
+        'conta': transacao.conta
+    };
     final Response response = await post(
       'http://10.0.2.2:5000/transacoes',
       headers: <String, String>{

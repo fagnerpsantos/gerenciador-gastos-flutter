@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_apis_rest/services/conta_rest_service.dart';
 import '../../models/conta.dart';
 import '../../models/transacao.dart';
 import '../../screens/constants/color_contant.dart';
@@ -22,6 +23,7 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
   TransacaoService ts = TransacaoService();
   Transacao transacao;
   ContaService cs = ContaService();
+  ContaRestService crs = ContaRestService();
   Future<List> _loadContas;
   List<Conta> _contas;
   final _tituloController = TextEditingController();
@@ -155,7 +157,7 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
   }
 
   Future<List> _getContas() async {
-    return await cs.getAllContas();
+    return await crs.getContas();
   }
 
 }
