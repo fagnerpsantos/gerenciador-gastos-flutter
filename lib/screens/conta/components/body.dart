@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_apis_rest/services/conta_rest_service.dart';
+import 'package:flutter_apis_rest/services/transacao_rest_service.dart';
 import '../../../models/conta.dart';
 import '../../../models/transacao.dart';
 import '../../../screens/components/card_transacao.dart';
@@ -19,9 +20,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  TransacaoService ts = TransacaoService();
-  ContaService cs = ContaService();
   ContaRestService crs = ContaRestService();
+  TransacaoRestService trs = TransacaoRestService();
   Future<List> _loadTransacoes;
   Future<Conta> _loadConta;
   List<Transacao> _transacoes;
@@ -30,7 +30,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     // TODO: implement initState
-    _loadTransacoes = _getTransacoes(widget.idConta);
+    // _loadTransacoes = _getTransacoes(widget.idConta);
     _loadConta = _getConta(widget.idConta);
     super.initState();
   }
@@ -95,37 +95,37 @@ class _BodyState extends State<Body> {
               ],
             )
         ),
-        FutureBuilder(
-            future: _loadTransacoes,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                _transacoes = snapshot.data;
-                return Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: _transacoes.length,
-                    padding: EdgeInsets.all(10),
-                    itemBuilder: (context, index) {
-                      return cardTransacao(context, index, _transacoes[index]);
-                    },
-                  ),
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }
-        ),
+        // FutureBuilder(
+        //     future: _loadTransacoes,
+        //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //       if (snapshot.hasData) {
+        //         _transacoes = snapshot.data;
+        //         return Expanded(
+        //           child: ListView.builder(
+        //             scrollDirection: Axis.vertical,
+        //             shrinkWrap: true,
+        //             itemCount: _transacoes.length,
+        //             padding: EdgeInsets.all(10),
+        //             itemBuilder: (context, index) {
+        //               return cardTransacao(context, index, _transacoes[index]);
+        //             },
+        //           ),
+        //         );
+        //       } else {
+        //         return Center(
+        //           child: CircularProgressIndicator(),
+        //         );
+        //       }
+        //     }
+        // ),
       ],
     );
 
   }
 
-  Future<List> _getTransacoes(int id) async {
-    return await ts.getTransacoesConta(id);
-  }
+  // Future<List> _getTransacoes(int id) async {
+  //   return await trs.getTransacoesConta(id);
+  // }
 
   Future<Conta> _getConta(int id) async {
     return await crs.getContaId(id.toString());

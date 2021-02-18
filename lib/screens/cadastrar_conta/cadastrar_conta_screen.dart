@@ -14,7 +14,6 @@ class CadastrarContaScreen extends StatefulWidget {
 }
 
 class _CadastrarContaScreenState extends State<CadastrarContaScreen> {
-  final ContaService ts = ContaService();
   final ContaRestService crs = ContaRestService();
   Conta conta;
   final _tituloController = TextEditingController();

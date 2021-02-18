@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_apis_rest/services/conta_rest_service.dart';
+import 'package:flutter_apis_rest/services/transacao_rest_service.dart';
 import '../../models/conta.dart';
 import '../../models/transacao.dart';
 import '../../screens/constants/color_contant.dart';
@@ -20,10 +21,9 @@ class CadastrarTransacaoScreen extends StatefulWidget {
 }
 
 class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
-  TransacaoService ts = TransacaoService();
   Transacao transacao;
-  ContaService cs = ContaService();
   ContaRestService crs = ContaRestService();
+  TransacaoRestService trs = TransacaoRestService();
   Future<List> _loadContas;
   List<Conta> _contas;
   final _tituloController = TextEditingController();
@@ -110,11 +110,12 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
                               Transacao newTransacao = Transacao(
                                   titulo: _tituloController.text,
                                   descricao: _descricaoController.text,
-                                  tipo: widget.tipoTransacao,
+                                  tipo: widget.tipoTransacao.toString(),
                                   valor: double.parse(_valorController.text),
-                                  data: selectedDate.toString(),
+                                  data: formatDate(
+                                      selectedDate, [yyyy, '-', mm, '-', dd]).toString(),
                                   conta: _contaSelecionada.id);
-                              ts.addTransacao(newTransacao);
+                              trs.addTransacao(newTransacao);
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (_) => HomeScreen(),

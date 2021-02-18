@@ -35,7 +35,7 @@ Widget cardTransacao(BuildContext context, int index, Transacao transacao) {
                   style: GoogleFonts.nunito(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: transacao.tipo == 1 ? Colors.green : Colors.redAccent),
+                      color: transacao.tipo == "TipoEnum.entrada" ? Colors.green : Colors.redAccent),
                 ),
                 Text(
                   transacao.descricao,

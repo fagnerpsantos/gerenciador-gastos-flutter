@@ -5,7 +5,7 @@ class Conta {
 
   Conta({this.id, this.titulo, this.saldo});
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'titulo': titulo,
@@ -13,20 +13,16 @@ class Conta {
     };
   }
 
-  Map<String, dynamic> toMapSaldo() {
+  Map<String, dynamic> toJsonSaldo() {
     return {
       'saldo': saldo,
     };
   }
 
-  Conta.fromMap(Map map){
+  Conta.fromJson(Map map){
     id = map["id"];
     titulo = map["titulo"];
     saldo = map["saldo"];
   }
 
 }
-
-var conta = Conta(
-    id: 1, titulo: "Minha carteira", saldo: 250.0
-);
