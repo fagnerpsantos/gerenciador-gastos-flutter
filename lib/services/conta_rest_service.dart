@@ -28,16 +28,12 @@ class ContaRestService {
   }
 
   Future<Conta> addConta(Conta conta) async {
-    final novaConta =  {
-      'titulo': conta.titulo,
-      'saldo': conta.saldo,
-    };
     final Response response = await post(
       'http://10.0.2.2:5000/contas',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(novaConta),
+      body: jsonEncode(conta.toMap()),
     );
     if (response.statusCode == 201) {
       return Conta.fromMap(json.decode(response.body));

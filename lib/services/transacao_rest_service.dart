@@ -19,21 +19,12 @@ class TransacaoRestService {
 }
 
   Future<Transacao> addTransacao(Transacao transacao) async {
-    final novaTransacao = {
-        'id': transacao.id,
-        'titulo': transacao.titulo,
-        'tipo': transacao.tipo,
-        'descricao': transacao.descricao,
-        'valor': transacao.valor,
-        'data': transacao.data,
-        'conta': transacao.conta
-    };
     final Response response = await post(
       'http://10.0.2.2:5000/transacoes',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(novaTransacao),
+      body: jsonEncode(transacao.toMap()),
     );
     if (response.statusCode == 200) {
       return Transacao.fromMap(json.decode(response.body));
