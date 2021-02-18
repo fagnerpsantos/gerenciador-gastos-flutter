@@ -21,6 +21,7 @@ class ContaRestService {
   Future<Conta> getContaId(String id) async {
     final response = await get('http://10.0.2.2:5000/contas/$id');
     if (response.statusCode == 200) {
+      print(response.body);
       return Conta.fromJson(json.decode(response.body));
     } else {
       throw Exception('Falha ao buscar conta');

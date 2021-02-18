@@ -1,7 +1,10 @@
+import 'package:flutter_apis_rest/models/transacao.dart';
+
 class Conta {
   int id;
   String titulo;
   double saldo;
+  // List<String, Map> transacoes;
 
   Conta({this.id, this.titulo, this.saldo});
 
