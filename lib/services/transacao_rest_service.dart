@@ -42,7 +42,7 @@ class TransacaoRestService {
   }
 
   Future<Transacao> getTransacaoId(String id) async {
-    final response = await get('http://10.0.2.2:5000/contas/$id');
+    final response = await get('http://10.0.2.2:5000/transacoes/$id');
     if (response.statusCode == 200) {
       return Transacao.fromJson(json.decode(response.body));
     } else {
@@ -56,6 +56,32 @@ class TransacaoRestService {
       print("conta removida");
     } else {
       throw Exception('Falha ao remover conta');
+    }
+  }
+
+  Future<Transacao> editTransacao(Transacao transacao, String id) async {
+    final novaTransacao = {
+      'titulo': transacao.titulo,
+      'tipo': transacao.tipo == "TipoEnum.entrada" ? "1" : "2" ,
+      'descricao': transacao.descricao,
+      'valor': transacao.valor,
+      'data': transacao.data,
+      'conta_id': transacao.conta
+    };
+    // backgroundColor: widget.tipoTransacao == 1 ? kGreenColor : Colors.redAccent,
+
+    // print(novaTransacao);
+    final Response response = await put(
+      'http://10.0.2.2:5000/transacoes/$id',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(novaTransacao),
+    );
+    if (response.statusCode == 200) {
+      return Transacao.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Erro ao editar transação');
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_apis_rest/screens/editar_transacao/editar_transacao_screen.dart';
 import 'package:flutter_apis_rest/services/transacao_rest_service.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../models/transacao.dart';
@@ -92,7 +93,13 @@ Widget cardTransacao(BuildContext context, int index, Transacao transacao) {
             caption: 'Editar',
             color: Colors.black45,
             icon: Icons.edit,
-            // onTap: () => _showSnackBar('More'),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => EditarTransacaoScreen(
+                  idTransacao: transacao.id.toString(),
+                ),
+              ),
+            ),
           ),
           IconSlideAction(
             caption: 'Remover',
