@@ -91,7 +91,7 @@ Widget cardTransacao(BuildContext context, int index, Transacao transacao) {
           IconSlideAction(
             caption: 'Editar',
             color: Colors.black45,
-            icon: Icons.more_horiz,
+            icon: Icons.edit,
             // onTap: () => _showSnackBar('More'),
           ),
           IconSlideAction(
