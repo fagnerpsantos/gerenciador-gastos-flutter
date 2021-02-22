@@ -50,4 +50,13 @@ class TransacaoRestService {
     }
   }
 
+  Future<void> removeTransacao(String id) async {
+    final response = await delete('http://10.0.2.2:5000/transacoes/$id');
+    if (response.statusCode == 204) {
+      print("conta removida");
+    } else {
+      throw Exception('Falha ao remover conta');
+    }
+  }
+
 }
