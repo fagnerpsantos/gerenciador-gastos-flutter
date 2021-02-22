@@ -10,13 +10,12 @@ class Transacao {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'tipo': tipo,
       'titulo': titulo,
       'descricao': descricao,
       'valor': valor,
       'data': data,
-      'conta': conta
+      'conta_id': conta
     };
   }
 
