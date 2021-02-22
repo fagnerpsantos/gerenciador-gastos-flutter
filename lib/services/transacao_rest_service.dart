@@ -68,9 +68,7 @@ class TransacaoRestService {
       'data': transacao.data,
       'conta_id': transacao.conta
     };
-    // backgroundColor: widget.tipoTransacao == 1 ? kGreenColor : Colors.redAccent,
 
-    // print(novaTransacao);
     final Response response = await put(
       'http://10.0.2.2:5000/transacoes/$id',
       headers: <String, String>{
