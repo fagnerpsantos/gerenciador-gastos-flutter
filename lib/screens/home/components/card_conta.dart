@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_apis_rest/services/conta_rest_service.dart';
+import 'package:flutter_apis_rest/services/transacao_rest_service.dart';
 import '../../../models/conta.dart';
 import '../../../screens/constants/color_contant.dart';
 import '../../../screens/conta/conta_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Widget cardConta(BuildContext context, Conta conta) {
+
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -12,6 +15,9 @@ Widget cardConta(BuildContext context, Conta conta) {
             builder: (_) => ContaScreen(idConta: conta.id,),
           ),
         );
+      },
+      onLongPress: () {
+        showAlertDialog(context, conta);
       },
       child: Container(
         margin: EdgeInsets.only(right: 10, left: 10),
@@ -67,5 +73,40 @@ Widget cardConta(BuildContext context, Conta conta) {
       ),
     );
   }
+
+showAlertDialog(BuildContext context, Conta conta)
+{
+  ContaRestService crs = ContaRestService();
+  // configura o button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      crs.removeConta(conta.id.toString());
+      Navigator.of(context).pop();
+    },
+  );
+  Widget cancelaButton = FlatButton(
+    child: Text("Cancelar"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+  // configura o  AlertDialog
+  AlertDialog alerta = AlertDialog(
+    title: Text("Deseja remover a conta?"),
+    content: Text("Esta ação não pode ser desfeita."),
+    actions: [
+      okButton,
+      cancelaButton
+    ],
+  );
+  // exibe o dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alerta;
+    },
+  );
+}
 
 

@@ -28,6 +28,15 @@ class ContaRestService {
     }
   }
 
+  Future<void> removeConta(String id) async {
+    final response = await delete('http://10.0.2.2:5000/contas/$id');
+    if (response.statusCode == 204) {
+      print("conta removida");
+    } else {
+      throw Exception('Falha ao remover conta');
+    }
+  }
+
   Future<Conta> addConta(Conta conta) async {
     final novaConta =  {
       'titulo': conta.titulo,
