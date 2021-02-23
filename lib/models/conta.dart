@@ -26,12 +26,12 @@ class Conta {
   Conta.fromJson(Map map){
     var list = map['transacoes'] as List;
     // print(list.runtimeType);
-    List<Transacao> imagesList = list.map((i) => Transacao.fromJson(i)).toList();
-    print(imagesList);
+    List<Transacao> transacaoList = list.map((i) => Transacao.fromJson(i)).toList();
+    // print(imagesList);
     id = map["id"];
     titulo = map["titulo"];
     saldo = map["saldo"];
-    transacoes = imagesList;
+    transacoes = transacaoList;
     // transacoes = (map["transacoes"] as List).map((e) => e).toList();
   }
 
