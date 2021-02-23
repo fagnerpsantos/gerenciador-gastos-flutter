@@ -9,6 +9,8 @@ import '../../../screens/transacao/transacao_screen.dart';
 import '../../../services/conta_service.dart';
 import '../../../services/transacao_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:asuka/asuka.dart' as asuka;
+
 
 import 'card_conta.dart';
 
@@ -57,6 +59,12 @@ class _BodyState extends State<Body> {
                               return cardConta(context, _contas[index]);
                             },
                           );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Icon(
+                            Icons.enhanced_encryption_rounded
+                          )
+                        );
                       } else {
                         return Center(
                           child: CircularProgressIndicator(),

@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_apis_rest/utils/http_util.dart';
 import 'package:http/http.dart';
 import '../models/conta.dart';
+import 'package:asuka/asuka.dart' as asuka;
+
 
 class ContaRestService {
   Future<List<Conta>> getContas() async {
@@ -12,7 +15,8 @@ class ContaRestService {
       },
     );
     if (response.statusCode == 401) {
-      print("erro");
+      throw Exception('Erro de autenticação');
+
     }
     else if (response.statusCode == 200) {
       List<dynamic> conteudo = jsonDecode(response.body);

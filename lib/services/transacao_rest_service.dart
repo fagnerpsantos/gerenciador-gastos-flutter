@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter_apis_rest/utils/http_util.dart';
 import 'package:http/http.dart';
 import '../models/transacao.dart';
+import 'package:asuka/asuka.dart' as asuka;
+
 
 class TransacaoRestService {
   Future<List<Transacao>> getTransacoes() async {
