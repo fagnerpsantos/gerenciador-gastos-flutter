@@ -22,110 +22,91 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   ContaRestService crs = ContaRestService();
   TransacaoRestService trs = TransacaoRestService();
-  Future<List> _loadTransacoes;
   Future<Conta> _loadConta;
-  List<Transacao> _transacoes;
   Conta _conta;
 
   @override
   void initState() {
     // TODO: implement initState
-    // _loadTransacoes = _getTransacoes(widget.idConta);
     _loadConta = _getConta(widget.idConta);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding:
-          EdgeInsets.only(top: 67, bottom: 16),
+    return FutureBuilder(
+      future: _loadConta,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          _conta = snapshot.data;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding:
+                EdgeInsets.only(top: 67, bottom: 16),
 
-          child: Container(
-            height: 175,
-            width: double.infinity,
-            child: FutureBuilder(
-                future: _loadConta,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    _conta = snapshot.data;
-                    return cardConta(context, _conta);
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }
-            ),
-          ),
-        ),
-        Padding(
-            padding:
-            EdgeInsets.only(left: 24, top: 32, bottom: 16, right: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'Transações',
-                  style: GoogleFonts.nunito(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: kBlackColor,
-                  ),
+                child: Container(
+                    height: 175,
+                    width: double.infinity,
+                    child: cardConta(context, _conta)
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => TransacaoScreen(),
+              ),
+              Padding(
+                  padding:
+                  EdgeInsets.only(left: 24, top: 32, bottom: 16, right: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Transações',
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: kBlackColor,
+                        ),
                       ),
-                    );
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => TransacaoScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'ver todas',
+                          style: GoogleFonts.nunito(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: kBlueColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+              ),
+              Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: _conta.transacoes.length,
+                  padding: EdgeInsets.all(10),
+                  itemBuilder: (context, index) {
+                    return cardTransacao(
+                        context, index, _conta.transacoes[index]);
                   },
-                  child: Text(
-                    'ver todas',
-                    style: GoogleFonts.nunito(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: kBlueColor,
-                    ),
-                  ),
                 ),
-              ],
-            )
-        ),
-        // FutureBuilder(
-        //     future: _loadTransacoes,
-        //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-        //       if (snapshot.hasData) {
-        //         _transacoes = snapshot.data;
-        //         return Expanded(
-        //           child: ListView.builder(
-        //             scrollDirection: Axis.vertical,
-        //             shrinkWrap: true,
-        //             itemCount: _transacoes.length,
-        //             padding: EdgeInsets.all(10),
-        //             itemBuilder: (context, index) {
-        //               return cardTransacao(context, index, _transacoes[index]);
-        //             },
-        //           ),
-        //         );
-        //       } else {
-        //         return Center(
-        //           child: CircularProgressIndicator(),
-        //         );
-        //       }
-        //     }
-        // ),
-      ],
+              )
+            ],
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      }
     );
-
   }
-
-  // Future<List> _getTransacoes(int id) async {
-  //   return await trs.getTransacoesConta(id);
-  // }
 
   Future<Conta> _getConta(int id) async {
     return await crs.getContaId(id.toString());

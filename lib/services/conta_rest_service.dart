@@ -6,8 +6,15 @@ import '../models/conta.dart';
 
 class ContaRestService {
   Future<List<Conta>> getContas() async {
-    final response = await HttpUtil.getData('http://10.0.2.2:5000/contas');
-    if (response.statusCode == 200) {
+    final response = await get('http://10.0.2.2:5000/contas',
+      headers: <String, String>{
+        'x-api-key': 'sua_app_key',
+      },
+    );
+    if (response.statusCode == 401) {
+      print("erro");
+    }
+    else if (response.statusCode == 200) {
       List<dynamic> conteudo = jsonDecode(response.body);
       List<Conta> contas = conteudo.map((dynamic conta) => Conta.fromJson(
           conta
@@ -29,7 +36,11 @@ class ContaRestService {
   }
 
   Future<void> removeConta(String id) async {
-    final response = await delete('http://10.0.2.2:5000/contas/$id');
+    final response = await delete('http://10.0.2.2:5000/contas/$id',
+      headers: <String, String>{
+        'x-api-key': 'sua_app_key',
+      },
+    );
     if (response.statusCode == 204) {
       print("conta removida");
     } else {
