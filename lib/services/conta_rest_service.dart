@@ -1,19 +1,12 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_apis_rest/utils/http_util.dart';
 import 'package:http/http.dart';
 import '../models/conta.dart';
-import 'package:asuka/asuka.dart' as asuka;
+import '../utils/http_util.dart';
 
 
 class ContaRestService {
   Future<List<Conta>> getContas() async {
-    final response = await get('http://10.0.2.2:5000/contas',
-      headers: <String, String>{
-        'x-api-key': 'sua_app_key',
-      },
-    );
+    final response = await HttpUtil.getData('contas');
     if (response.statusCode == 401) {
       throw Exception('Erro de autenticação');
 
@@ -30,7 +23,7 @@ class ContaRestService {
   }
 
   Future<Conta> getContaId(String id) async {
-    final response = await get('http://10.0.2.2:5000/contas/$id');
+    final response = await HttpUtil.getDataId('contas', id);
     if (response.statusCode == 200) {
       print(response.body);
       return Conta.fromJson(json.decode(response.body));
@@ -40,11 +33,7 @@ class ContaRestService {
   }
 
   Future<void> removeConta(String id) async {
-    final response = await delete('http://10.0.2.2:5000/contas/$id',
-      headers: <String, String>{
-        'x-api-key': 'sua_app_key',
-      },
-    );
+    final response = await HttpUtil.removeData('contas', id);
     if (response.statusCode == 204) {
       print("conta removida");
     } else {
@@ -57,13 +46,7 @@ class ContaRestService {
       'titulo': conta.titulo,
       'saldo': conta.saldo,
     };
-    final Response response = await post(
-      'http://10.0.2.2:5000/contas',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(novaConta),
-    );
+    final Response response = await HttpUtil.addData('contas', novaConta);
     if (response.statusCode == 201) {
       return Conta.fromJson(json.decode(response.body));
     } else {

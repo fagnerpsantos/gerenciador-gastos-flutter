@@ -8,7 +8,7 @@ import 'package:asuka/asuka.dart' as asuka;
 
 class TransacaoRestService {
   Future<List<Transacao>> getTransacoes() async {
-    final response = await HttpUtil.getData('http://10.0.2.2:5000/transacoes');
+    final response = await HttpUtil.getData('transacoes');
     if (response.statusCode == 200) {
       List<dynamic> conteudo = jsonDecode(response.body);
       List<Transacao> transacoes = conteudo.map((dynamic transacao) => Transacao.fromJson(
@@ -29,13 +29,7 @@ class TransacaoRestService {
     //   'data': transacao.data,
     //   'conta_id': transacao.conta
     // };
-    final Response response = await post(
-      'http://10.0.2.2:5000/transacoes',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(transacao.toJson()),
-    );
+    final Response response = await HttpUtil.addData('transacoes', transacao.toJson());
     if (response.statusCode == 201) {
       return Transacao.fromJson(json.decode(response.body));
     } else {
@@ -44,7 +38,7 @@ class TransacaoRestService {
   }
 
   Future<Transacao> getTransacaoId(String id) async {
-    final response = await get('http://10.0.2.2:5000/transacoes/$id');
+    final response = await HttpUtil.getDataId('transacoes', id);
     if (response.statusCode == 200) {
       return Transacao.fromJson(json.decode(response.body));
     } else {
@@ -53,7 +47,7 @@ class TransacaoRestService {
   }
 
   Future<void> removeTransacao(String id) async {
-    final response = await delete('http://10.0.2.2:5000/transacoes/$id');
+    final response = await HttpUtil.removeData('transacoes', id);
     if (response.statusCode == 204) {
       print("conta removida");
     } else {
@@ -71,13 +65,7 @@ class TransacaoRestService {
       'conta_id': transacao.conta
     };
 
-    final Response response = await put(
-      'http://10.0.2.2:5000/transacoes/$id',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(novaTransacao),
-    );
+    final Response response = await HttpUtil.editData('transacoes', novaTransacao, id);
     if (response.statusCode == 200) {
       return Transacao.fromJson(json.decode(response.body));
     } else {
