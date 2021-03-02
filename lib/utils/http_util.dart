@@ -38,7 +38,8 @@ class HttpUtil {
     return response;
   }
 
-  static Future<http.Response> editData(String uri, Map<String, Object> data, String id) async {
+  static Future<http.Response> editData(String uri, Map<String, Object> data,
+      String id) async {
     final response = await http.put(
       baseUrl + uri,
       headers: <String, String>{

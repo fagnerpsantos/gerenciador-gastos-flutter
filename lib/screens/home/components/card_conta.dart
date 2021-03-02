@@ -82,13 +82,13 @@ showAlertDialog(BuildContext context, Conta conta)
     child: Text("OK"),
     onPressed: () {
       crs.removeConta(conta.id.toString());
-      Navigator.of(context).pop();
+      Navigator.of(context, rootNavigator: true).pop();
     },
   );
   Widget cancelaButton = FlatButton(
     child: Text("Cancelar"),
     onPressed: () {
-      Navigator.of(context).pop();
+      Navigator.of(context, rootNavigator: true).pop();
     },
   );
   // configura o  AlertDialog
